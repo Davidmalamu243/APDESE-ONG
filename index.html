@@ -1,109 +1,525 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>APDESE ONG - Appui aux Personnes Démunies et de Sensibilisation sur l'Environnement</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-      :root {
-        --foreground-rgb: 0, 0, 0;
-        --background-start-rgb: 214, 219, 220;
-        --background-end-rgb: 255, 255, 255;
+    <title>APDESE NGO - Action pour la Paix, Développement Endogène et Sauvegarde de l'Environnement</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              background: 'oklch(0.98 0.01 260)',
+              foreground: 'oklch(0.1 0.03 260)',
+              primary: 'oklch(0.55 0.18 260)',
+              secondary: 'oklch(0.82 0.15 85)',
+              accent: 'oklch(0.92 0.08 85)',
+              muted: 'oklch(0.95 0.01 260)',
+              border: 'oklch(0.9 0.02 260)',
+              card: 'oklch(1 0 0)',
+            },
+            fontFamily: {
+              heading: ['Outfit', 'sans-serif'],
+              sans: ['Space Grotesk', 'sans-serif'],
+            },
+            animation: {
+              'bounce-slow': 'bounce 3s infinite',
+            },
+            keyframes: {
+              bounce: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
+            }
+          }
+        }
       }
-      body {
-        font-family: 'Inter', sans-serif;
-        margin: 0;
-        padding: 0;
-        color: rgb(var(--foreground-rgb));
+    </script>
+    
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply bg-background text-foreground antialiased transition-colors duration-500 min-h-screen;
+          background-image: 
+            radial-gradient(circle at 0% 0%, oklch(0.25 0.12 260 / 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 100% 0%, oklch(0.82 0.15 85 / 0.05) 0%, transparent 30%),
+            radial-gradient(circle at 100% 100%, oklch(0.3 0.15 280 / 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 0% 100%, oklch(0.55 0.18 260 / 0.05) 0%, transparent 30%);
+          background-attachment: fixed;
+        }
+        .dark {
+          --background: oklch(0.08 0.03 260);
+          --foreground: oklch(0.98 0.01 80);
+          --card: oklch(0.12 0.04 260);
+          --primary: oklch(0.55 0.18 260);
+          --secondary: oklch(0.82 0.15 85);
+          --muted: oklch(0.15 0.03 260);
+          --border: oklch(0.2 0.04 260);
+        }
+        .dark body {
+          @apply bg-[#0b101b] text-[#f2f4f7];
+          background-image: 
+            radial-gradient(circle at 0% 0%, oklch(0.25 0.12 260 / 0.3) 0%, transparent 40%),
+            radial-gradient(circle at 100% 0%, oklch(0.82 0.15 85 / 0.05) 0%, transparent 30%),
+            radial-gradient(circle at 100% 100%, oklch(0.3 0.15 280 / 0.2) 0%, transparent 40%),
+            radial-gradient(circle at 0% 100%, oklch(0.55 0.18 260 / 0.1) 0%, transparent 30%);
+        }
       }
-      /* Styles simplifiés pour GitHub Pages */
-      .bg-primary { background-color: #166534; }
-      .text-primary { color: #166534; }
+      @layer utilities {
+        .bg-gradient-logo {
+          background: linear-gradient(135deg, oklch(0.55 0.18 260) 0%, oklch(0.35 0.1 260) 100%);
+        }
+        .bg-gradient-gold {
+          background: linear-gradient(135deg, oklch(0.82 0.15 85) 0%, oklch(0.92 0.1 95) 100%);
+        }
+        .text-gradient-logo {
+          @apply bg-clip-text text-transparent bg-gradient-to-r from-[oklch(0.55_0.18_260)] via-[oklch(0.7_0.15_200)] to-[oklch(0.82_0.15_85)];
+        }
+        .glass-card {
+          @apply bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-black/5 dark:border-white/10 shadow-xl transition-all duration-500;
+        }
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
-<script type="module">
-      import React from 'https://esm.sh/react@18.2.0';
-      import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
-      import { motion, AnimatePresence } from 'https://esm.sh/framer-motion@10.12.16';
-      import { Heart, Leaf, Users, Mail, MapPin, Phone, ArrowRight, Menu, X, Landmark, Globe, Recycle } from 'https://esm.sh/lucide-react@0.244.0';
 
-      const App = () => {
-        const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-        const [language, setLanguage] = React.useState('fr');
+    <!-- Scripts via ESM.sh -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+          "lucide-react": "https://esm.sh/lucide-react@0.344.0",
+          "framer-motion": "https://esm.sh/framer-motion@10.12.16",
+          "clsx": "https://esm.sh/clsx@1.2.1",
+          "tailwind-merge": "https://esm.sh/tailwind-merge@1.13.0"
+        }
+      }
+    </script>
+    
+    <!-- Babel for JSX compilation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-        const translations = {
-          fr: {
-            title: "APDESE ONG",
-            subtitle: "Appui aux Personnes Démunies et de Sensibilisation sur l'Environnement",
-            heroTitle: "Bâtir un avenir solidaire et durable",
-            heroSub: "Nous luttons contre la pauvreté tout en protégeant notre environnement pour les générations futures.",
-            contact: "Contactez-nous",
-            about: "À propos",
-            missions: "Nos Missions",
-            address: "Conakry, Guinée",
-            phone: "+224 621 00 00 00",
-            email: "contact@apdese-ong.org"
-          }
-        };
+    <script type="text/babel">
+      import React, { useState, useEffect } from "react";
+      import ReactDOM from "react-dom/client";
+      import { 
+        Globe, Menu, X, ChevronRight, Shield, HandHeart, TrendingUp, Leaf, 
+        Scale, Users, Briefcase, MessageSquare, Sprout, GraduationCap, 
+        Stethoscope, Ban, Pickaxe, CheckCircle2, MapPin, Calendar, Heart,
+        Bird, Building, Coins, Sun, Moon
+      } from "lucide-react";
+      import { motion, AnimatePresence } from "framer-motion";
 
-        const t = translations[language];
+      // --- Translations ---
+      const translations = {
+        en: {
+          nav: { home: "Home", about: "About", mission: "Mission & Vision", domains: "Domains", org: "Organization", news: "News", donate: "Donate" },
+          hero: { badge: "NGO Action for Peace", title1: "Endogenous", title2: "Development", title3: "and", title4: "Environmental", title5: "Safeguarding", desc: "APDESE mobilizes communities through participatory initiatives for peaceful cohabitation and sustainable development in DRC.", cta1: "Discover our actions", cta2: "Contact us", stats: { since: "Since", provinces: "Provinces", domains: "Domains", engaged: "Engaged" } },
+          about: { badge: "General Aspects", p1: "The NGO Action for Peace; Endogenous Development and Safeguarding of the Environment; APDESE in acronym, is a Congolese non-governmental organization with its headquarters in Bukavu, Ibanda, South Kivu.", p2: "Born in February 2019 and officially approved in 2024 under notary deed No. 10742, APDESE is operational in South Kivu and North Kivu, with the possibility of extending its activities in other provinces according to needs and available resources.", hq: "Headquarters", founded: "Founded", impact: "Years of Impact" },
+          mission: { title: "Our Purpose", subtitle: "We believe in the power of local initiatives to sustainably transform communities.", tabs: { mission: "Mission", vision: "Vision" }, items: { m1: { t: "Mobilization", d: "Mobilize communities through endogenous and participatory peace consolidation initiatives." }, m2: { t: "Excellence", d: "Engage in actions likely to create a transition from mediocrity to excellence." }, m3: { t: "Emergence", d: "Promote socially viable community emergence through environmental audits." }, v1: { t: "Peace Model", d: "Be both a model and a space for promoting peace values and human development." }, v2: { t: "Transformation", d: "Participate in positive conflict transformation to promote a peaceful social environment." }, v3: { t: "Ecosystem", d: "Contribute to ecosystem protection and safeguarding through a multi-dimensional portfolio." }, v4: { t: "Empowerment", d: "Seek viability, stability, empowerment, and openness between communities." } } },
+          domains: { badge: "Expertise", title: "Intervention Domains", subtitle: "Varied expertise to meet the complex challenges of the region.", items: [ { t: "Governance & Conflicts", d: "Natural resource governance and peaceful conflict resolution." }, { t: "Community Resilience", d: "Resilience, community recovery, and resource mobilization." }, { t: "Entrepreneurial Leaders", d: "Support, structuring, and training of entrepreneurial leaders." }, { t: "Advocacy & Dialogue", d: "Advocacy, protection, and social dialogue for human rights." }, { t: "Sustainable Agropastoral", d: "Sustainable and emergency agropastoral for food security." }, { t: "Climate & Environment", d: "Concrete actions for climate and environmental safeguarding." }, { t: "Education", d: "Support for basic education and vocational training." }, { t: "Health & Hygiene", d: "Health, hygiene promotion, and community sanitation." }, { t: "GBV Prevention", d: "Protection and fight against Gender-Based and sexual Violence." } ] },
+          org: { title: "Organization and Functioning", desc: "The non-profit APDESE operates in accordance with law number 004/2001 of July 10, 2001, on general provisions applicable to non-profit associations.", items: [ "Non-profit Statutes", "Internal Regulations", "Standards and Code of Conduct", "Protocols signed with partners", "Meeting minutes and internal documents" ], accordion: { t1: "Legal Framework", d1: "Law No. 004/2001 of July 10, 2001, governing non-profits in the Democratic Republic of Congo. A rigorous framework for legitimate action.", t2: "Transparence", d2: "All our protocols and meeting minutes are archived and available to our partners and members to guarantee transparent and responsible management.", t3: "Ethics & Conduct", d3: "A strict code of conduct and ethical standards govern interactions between non-profit members and beneficiary communities, ensuring respect and integrity." } },
+          footer: { nav: "Navigation", contact: "Contact", desc: "Action for Peace, Endogenous Development and Environmental Safeguarding. An organization committed to the future of the DRC, building peace through local action.", rights: "All rights reserved.", motto: "Peace • Development • Environment" },
+          partners: { title: "Our Partners" },
+          resources: { title: "Our Resources", subtitle: "The pillars that support our daily action.", human: { t: "Human Resources", d: "A dedicated team of experts and passionate volunteers committed to the cause." }, material: { t: "Material Resources", d: "Modern offices and equipment to ensure the efficiency of our field operations." }, financial: { t: "Financial Resources", d: "Member contributions, generous donations, and support from our strategic partners." } },
+          news: { badge: "Updates", title: "Latest News", subtitle: "Stay informed about our field actions and community impact.", readMore: "Read more", categories: { all: "All", project: "Project Update", success: "Success Story", announcement: "Announcement" }, items: [ { t: "Reforestation in South Kivu", d: "Over 5,000 trees planted this month to restore local ecosystems and fight erosion.", date: "April 12, 2024", cat: "Project Update", img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop" }, { t: "Peace Dialogue Success", d: "Successful mediation between three communities in Kalehe, leading to a cohabitation pact.", date: "March 28, 2024", cat: "Success Story", img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=600&auto=format&fit=crop" }, { t: "New Partnership Signed", d: "APDESE signs a strategic agreement for basic education support in rural areas.", date: "March 15, 2024", cat: "Announcement", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop" } ] }
+        },
+        fr: {
+          nav: { home: "Accueil", about: "À Propos", mission: "Mission & Vision", domains: "Domaines", org: "Organisation", news: "Actualités", donate: "Faire un don" },
+          hero: { badge: "ONG Action pour la Paix", title1: "Développement", title2: "Endogène", title3: "et", title4: "Sauvegarde", title5: "de l’Environnement", desc: "APDESE mobilise les communautés à travers des initiatives participatives pour une cohabitation pacifique et un développement durable en RDC.", cta1: "Découvrir nos actions", cta2: "Nous contacter", stats: { since: "Depuis", provinces: "Provinces", domains: "Domaines", engaged: "Engagé" } },
+          about: { badge: "Aspects Généraux", p1: "L’ONG Action pour la Paix ; le Développement Endogène et la Sauvegarde de l’Environnement ; APDESE en sigle, est une organisation non gouvernementale congolaise qui a son siège social à Bukavu, Ibanda, au Sud Kivu.", p2: "Née en février 2019 et agréée officiellement en 2024 sous l’acte notarié n° 10742, APDESE est opérationnelle au Sud Kivu et Nord Kivu, avec la possibilité d’étendre ses activités dans d’autres provinces selon les besoins et les ressources disponibles.", hq: "Siège Social", founded: "Fondation", impact: "Années d'Impact" },
+          mission: { title: "Notre Raison d'Être", subtitle: "Nous croyons en la force des initiatives locales pour transformer durablement les communautés.", tabs: { mission: "Mission", vision: "Vision" }, items: { m1: { t: "Mobilisation", d: "Mobiliser les communautés à travers des initiatives endogènes et participatives de consolidation de paix." }, m2: { t: "Excellence", d: "Engager des actions susceptibles de créer un passage de la médiocrité à l'excellence." }, m3: { t: "Émergence", d: "Favoriser l’émergence communautaire socialement viable à travers des audits environnementaux." }, v1: { t: "Modèle de Paix", d: "Être à la fois un modèle et un espace de promotion des valeurs de paix et de développement humain." }, v2: { t: "Transformation", d: "Participer à une transformation positive des conflits afin de promouvoir un environnement social pacifique." }, v3: { t: "Écosystème", d: "Contribuer à la protection et sauvegarde de l’écosystème à travers un portefeuille multi dimensionnel." }, v4: { t: "Autonomisation", d: "Rechercher la viabilité, la stabilité, l’autonomisation et l’ouverture entre les communautés." } } },
+          domains: { badge: "Expertise", title: "Domaines d’Intervention", subtitle: "Une expertise variée pour répondre aux défis complexes de la région.", items: [ { t: "Gouvernance & Conflits", d: "Gouvernance des ressources naturelles et résolution pacifique des conflits." }, { t: "Résilience Communautaire", d: "Résilience, relèvement communautaires et mobilisation des ressources." }, { t: "Leaders Entrepreneurs", d: "Appui, structuration et formation des leaders entrepreneurs." }, { t: "Plaidoyer & Dialogue", d: "Plaidoyer, protection et dialogue social pour les droits humains." }, { t: "Agropastorale Durable", d: "L’Agropastorale durable et d’urgence pour la sécurité alimentaire." }, { t: "Climat & Environnement", d: "Actions concrètes pour le climat et la sauvegarde de l'environnement." }, { t: "Éducation", d: "Soutien à l'éducation de base et formation professionnelle." }, { t: "Santé & Hygiène", d: "Santé, promotion de l’hygiène et de l’assainissement communautaire." }, { t: "Lutte contre les VBG", d: "Protection et lutte contre les Violences Basées sur les Genres et sexuelles." } ] },
+          org: { title: "Organisation et Fonctionnement", desc: "L'asbl APDESE fonctionne conformément à la loi numéro 004/2001 du 10 juillet 2001 portant dispositions générales applicables aux associations sans but lucratif.", items: [ "Statut de l'asbl", "Règlement d’ordre intérieur", "Normes et code de conduite", "Protocoles signés avec les partenaires", "P.V des réunions et documents internes" ], accordion: { t1: "Cadre Légal", d1: "Loi n° 004/2001 du 10 juillet 2001 régissant les ASBL en République Démocratique du Congo. Un cadre rigoureux pour une action légitime.", t2: "Transparence", d2: "Tous nos protocoles et procès-verbaux de réunions sont archivés et disponibles pour nos partenaires et membres pour garantir une gestion transparente et responsable.", t3: "Éthique & Conduite", d3: "Un code de conduite strict et des normes éthiques régissent les interactions entre les membres de l'asbl et les communautés bénéficiaires, assurant respect et intégrité." } },
+          footer: { nav: "Navigation", contact: "Contact", desc: "Action pour la Paix, le Développement Endogène et la Sauvegarde de l’Environnement. Une organisation engagée pour le futur de la RDC, bâtissant la paix par l'action locale.", rights: "Tous droits réservés.", motto: "Paix • Développement • Environnement" },
+          partners: { title: "Nos Partenaires" },
+          resources: { title: "Nos Ressources", subtitle: "Les piliers qui soutiennent notre action quotidienne.", human: { t: "Ressources Humaines", d: "Une équipe dévouée d'experts et de bénévoles passionnés engagés pour la cause." }, material: { t: "Ressources Matérielles", d: "Des bureaux et équipements modernes pour assurer l'efficacité de nos opérations sur le terrain." }, financial: { t: "Ressources Financières", d: "Cotisations des membres, dons généreux et appui de nos partenaires stratégiques." } },
+          news: { badge: "Mises à jour", title: "Dernières Nouvelles", subtitle: "Restez informé de nos actions sur le terrain et de notre impact communautaire.", readMore: "Lire la suite", categories: { all: "Tout", project: "Projet", success: "Succès", announcement: "Annonce" }, items: [ { t: "Reboisement au Sud-Kivu", d: "Plus de 5 000 arbres plantés ce mois-ci pour restaurer les écosystèmes locaux et lutter contre l'érosion.", date: "12 Avril 2024", cat: "Projet", img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop" }, { t: "Succès du Dialogue de Paix", d: "Médiation réussie entre trois communautés à Kalehe, aboutissant à un pacte de cohabitation.", date: "28 Mars 2024", cat: "Succès", img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=600&auto=format&fit=crop" }, { t: "Nouveau Partenariat Signé", d: "APDESE signe un accord stratégique pour le soutien à l'éducation de base en milieu rural.", date: "15 Mars 2024", cat: "Annonce", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop" } ] }
+        },
+        sw: {
+          nav: { home: "Mwanzo", about: "Kuhusu Sisi", mission: "Dhamira & Maono", domains: "Maeneo", org: "Shirika", news: "Habari", donate: "Changia" },
+          hero: { badge: "NGO Action pour la Paix", title1: "Maendeleo", title2: "ya Ndani", title3: "na", title4: "Ulinzi", title5: "wa Mazingira", desc: "APDESE inahamasisha jamii kupitia mipango shirikishi kwa ajili ya kuishi kwa amani na maendeleo endelevu nchini RDC.", cta1: "Gundua hatua zetu", cta2: "Wasiliana nasi", stats: { since: "Tangu", provinces: "Mikoa", domains: "Maeneo", engaged: "Imejitolea" } },
+          about: { badge: "Vipengele vya Jumla", p1: "NGO Action pour la Paix ; le Développement Endogène et la Sauvegarde de l’Environnement ; APDESE kwa kifupi, ni shirika lisilo la kiserikali la Kongo ambalo lina makao yake makuu mjini Bukavu, Ibanda, Kivu Kusini.", p2: "Ilianzishwa mnamo Februari 2019 na kuidhinishwa rasmi mnamo 2024 chini ya kitendo cha mthibitishaji namba 10742, APDESE inafanya kazi Kivu Kusini na Kivu Kaskazini, ikiwa na uwezekano wa kupanua shughuli katika mikoa mingine kulingana na mahitaji na rasilimali zilizopo.", hq: "Makao Makuu", founded: "Msingi", impact: "Miaka ya Athari" },
+          mission: { title: "Sababu Yetu ya Kuwepo", subtitle: "Tunaamini katika nguvu ya mipango ya ndani ili kubadilisha jamii kwa njia endelevu.", tabs: { mission: "Dhamira", vision: "Maono" }, items: { m1: { t: "Uhamasishaji", d: "Kuhamasisha jamii kupitia mipango ya ndani na shirikishi ya kuimarisha amani." }, m2: { t: "Ubora", d: "Kushiriki dans hatua zinazoweza kuunda mpito kutoka kwa hali duni hadi ubora." }, m3: { t: "Uibukaji", d: "Kukuza uibukaji wa jamii unaoweza kuishi kijamii kupitia ukaguzi wa mazingira." }, v1: { t: "Mfano wa Amani", d: "Kuwa mfano na nafasi ya kukuza maadili ya amani na maendeleo ya binadamu." }, v2: { t: "Mabadiliko", d: "Kushiriki katika mabadiliko chanya ya migogoro ili kukuza mazingira ya kijamii yenye amani." }, v3: { t: "Mfumo wa Ikolojia", d: "Kuchangia dans ulinzi na uhifadhi wa mfumo wa ikolojia kupitia kwingineko ya pande nyingi." }, v4: { t: "Uwezeshaji", d: "Kutafuta uwezekano, utulivu, uwezeshaji na uwazi kati ya jamii." } } },
+          domains: { badge: "Utaalamu", title: "Maeneo ya Uingiliaji", subtitle: "Utaalamu mbalimbali ili kukabiliana na changamoto tata za eneo hili.", items: [ { t: "Utawala & Migogoro", d: "Utawala wa rasilimali asili na utatuzi wa amani wa migogoro." }, { t: "Uvumilivu wa Jamii", d: "Uvumilivu, kurejesha jamii na uhamasishaji wa rasilimali." }, { t: "Viongozi Wajasiriamali", d: "Msaada, muundo na mafunzo ya viongozi wajasiriamali." }, { t: "Utetezi & Mazungumzo", d: "Utetezi, ulinzi na mazungumzo ya kijamii kwa haki za binadamu." }, { t: "Kilimo Endelevu", d: "Kilimo endelevu na cha dharura kwa usalama wa chakula." }, { t: "Hali ya Hewa & Mazingira", d: "Hatua madhubuti kwa ajili ya hali ya hewa na ulinzi wa mazingira." }, { t: "Elimu", d: "Msaada kwa elimu ya msingi na mafunzo ya ufundi." }, { t: "Afya & Usafi", d: "Afya, kukuza usafi na usafi wa mazingira wa jamii." }, { t: "Kupambana na VBG", d: "Ulinzi na mapambano dhidi ya Ukatili wa Kijinsia na kingono." } ] },
+          org: { title: "Shirika na Uendeshaji", desc: "Asbl APDESE inafanya kazi kulingana na sheria namba 004/2001 ya Julai 10, 2001 inayoelezea masharti ya jumla yanayotumika kwa vyama visivyo vya faida.", items: [ "Sheria ya asbl", "Kanuni za ndani", "Viwango na kanuni za maadili", "Itifaki zilizotiwa saini na washirika", "P.V za mikutano na nyaraka za ndani" ], accordion: { t1: "Mfumo wa Kisheria", d1: "Sheria namba 004/2001 ya Julai 10, 2001 inayosimamia ASBL katika Jamhuri ya Kidemokrasia ya Kongo. Mfumo thabiti kwa hatua halali.", t2: "Uwazi", d2: "Itifaki zetu zote na muhtasari wa mikutano umehifadhiwa na unapatikana kwa washirika na wanachama wetu ili kuhakikisha usimamizi wa wazi na wa kuwajibika.", t3: "Maadili & Mwenendo", d3: "Kanuni kali za mwenendo na viwango vya maadili vinasimamia mwingiliano kati ya wanachama wa asbl na jamii zinazofaidika, kuhakikisha heshima na uadilifu." } },
+          footer: { nav: "Urambazaji", contact: "Wasiliana", desc: "Action pour la Paix, le Développement Endogène et la Sauvegarde de l’Environnement. Shirika lililojitolea kwa mustakabali wa RDC, likijenga amani kupitia hatua za ndani.", rights: "Haki zote zimehifadhiwa.", motto: "Amani • Maendeleo • Mazingira" },
+          partners: { title: "Washirika Wetu" },
+          resources: { title: "Rasilimali Zetu", subtitle: "Nguzo zinazounga mkono hatua zetu za kila siku.", human: { t: "Rasilimali Watu", d: "Timu iliyojitolea ya wataalamu na wajitoleaji wenye shauku waliojitolea kwa sababu hiyo." }, material: { t: "Rasilimali Vifaa", d: "Ofisi na vifaa vya kisasa ili kuhakikisha ufanisi wa shughuli zetu za nyanjani." }, financial: { t: "Rasilimali Fedha", d: "Michango ya wanachama, michango ya ukarimu na msaada kutoka kwa washirika wetu wa kimkakati." } },
+          news: { badge: "Habari Mpya", title: "Habari za Hivi Karibuni", subtitle: "Pata habari kuhusu hatua zetu za nyanjani na athari kwa jamii.", readMore: "Soma zaidi", categories: { all: "Zote", project: "Mradi", success: "Mafanikio", announcement: "Tangazo" }, items: [ { t: "Upandaji Miti Kivu Kusini", d: "Zaidi ya miti 5,000 imepandwa mwezi huu ili kurejesha mifumo ya ikolojia ya ndani na kupambana na mmomonyoko.", date: "Aprili 12, 2024", cat: "Mradi", img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop" }, { t: "Mafanikio ya Mazungumzo ya Amani", d: "Upatanishi wenye mafanikio kati ya jamii tatu huko Kalehe, ulipelekea mkataba wa kuishi pamoja.", date: "Machi 28, 2024", cat: "Mafanikio", img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=600&auto=format&fit=crop" }, { t: "Ushirikiano Mpya Umesainiwa", d: "APDESE inasaini makubaliano ya kimkakati kwa ajili ya msaada wa elimu ya msingi katika maeneo ya vijijini.", date: "Machi 15, 2024", cat: "Tangazo", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop" } ] }
+        }
+      };
 
-        return (
-          <div className="min-h-screen bg-white">
-            <nav className="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-green-100">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-20 items-center">
-                  <div className="flex items-center gap-2">
-                    <Leaf className="w-8 h-8 text-green-600" />
-                    <span className="text-2xl font-bold text-green-800">{t.title}</span>
-                  </div>
-                  <div className="hidden md:flex gap-8 font-medium">
-                    <a href="#missions" className="hover:text-green-600 transition-colors">Missions</a>
-                    <a href="#about" className="hover:text-green-600 transition-colors">À propos</a>
-                    <a href="#contact" className="hover:text-green-600 transition-colors">Contact</a>
-                  </div>
-                </div>
-              </div>
-            </nav>
+      // --- Simple UI Components ---
+      const LucideIcon = ({ name: Icon, className }) => <Icon className={className} />;
 
-            <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-green-50 via-white to-green-50">
-              <div className="max-w-7xl mx-auto text-center">
-                <motion.h1 initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="text-5xl md:text-7xl font-bold mb-6 text-green-900 tracking-tight">
-                  {t.heroTitle}
-                </motion.h1>
-                <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">{t.heroSub}</p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="px-8 py-4 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 transition">Faire un don</button>
-                  <button className="px-8 py-4 border-2 border-green-600 text-green-600 rounded-full font-bold hover:bg-green-50 transition">En savoir plus</button>
-                </div>
-              </div>
-            </section>
-<footer className="bg-gray-900 text-white py-20 px-4" id="contact">
-              <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
-                <div>
-                  <h3 className="text-2xl font-bold mb-6">{t.title}</h3>
-                  <p className="text-gray-400">{t.subtitle}</p>
-                </div>
-                <div>
-                  <h4 className="font-bold mb-6">Contact</h4>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3"><MapPin className="w-5 h-5 text-green-500"/> {t.address}</div>
-                    <div className="flex items-center gap-3"><Phone className="w-5 h-5 text-green-500"/> {t.phone}</div>
-                    <div className="flex items-center gap-3"><Mail className="w-5 h-5 text-green-500"/> {t.email}</div>
-                  </div>
-                </div>
-              </div>
-            </footer>
+      const Logo = () => (
+        <div className="flex items-center gap-3 group cursor-pointer">
+          <div className="relative">
+            <div className="bg-gradient-logo p-2.5 rounded-2xl shadow-xl relative z-10 overflow-hidden">
+              <Globe className="h-7 w-7 text-white animate-pulse" />
+            </div>
+            <div className="absolute -bottom-2 -left-2 bg-secondary p-1 rounded-full shadow-lg z-20 border-2 border-background dark:border-[#0b101b]">
+              <HandHeart className="h-3 w-3 text-secondary-foreground" />
+            </div>
           </div>
+          <div className="flex flex-col">
+            <span className="font-black text-2xl tracking-tighter text-gradient-logo leading-none">APDESE</span>
+            <span className="text-[8px] uppercase tracking-[0.3em] font-black text-secondary/80">NGO • RDC</span>
+          </div>
+        </div>
+      );
+
+      // --- Main Components ---
+      const Navbar = ({ lang, setLang, theme, toggleTheme }) => {
+        const [isOpen, setIsOpen] = useState(false);
+        const t = translations[lang].nav;
+        return (
+          <nav className="fixed top-0 w-full z-50 bg-background/40 dark:bg-[#0b101b]/40 backdrop-blur-2xl border-b border-black/5 dark:border-white/5 transition-colors duration-500">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between h-24 items-center">
+                <Logo />
+                <div className="hidden lg:flex items-center gap-10">
+                  <div className="flex items-center gap-6">
+                    {['home', 'about', 'mission', 'domains', 'news', 'org'].map(k => (
+                      <a key={k} href={`#${k}`} className="text-[10px] font-black uppercase tracking-widest hover:text-secondary transition-colors">{t[k]}</a>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button onClick={toggleTheme} className="p-3 glass-card rounded-2xl hover:bg-white/10 transition-all text-primary">
+                      {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                    </button>
+                    <div className="flex items-center gap-1 bg-white/5 p-1 rounded-2xl border border-white/10">
+                      {['fr', 'en', 'sw'].map(l => (
+                        <button key={l} onClick={() => setLang(l)} className={`px-3 py-1.5 rounded-xl text-[9px] font-black uppercase transition-all ${lang === l ? 'bg-gradient-gold text-black shadow-lg scale-105' : 'text-muted-foreground'}`}>{l}</button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="lg:hidden flex items-center gap-3">
+                   <button onClick={toggleTheme} className="p-2 glass-card rounded-xl text-primary">
+                    {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                  </button>
+                  <button onClick={() => setIsOpen(!isOpen)} className="p-3 text-primary glass-card rounded-xl">
+                    {isOpen ? <X /> : <Menu />}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="lg:hidden bg-background/95 dark:bg-[#0b101b]/95 backdrop-blur-3xl border-b border-white/5 px-8 py-12 flex flex-col gap-6 shadow-2xl">
+                  {['home', 'about', 'mission', 'domains', 'news', 'org'].map(k => (
+                    <a key={k} href={`#${k}`} onClick={() => setIsOpen(false)} className="text-xl font-black">{t[k]}</a>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </nav>
         );
       };
 
+      const Hero = ({ lang }) => {
+        const t = translations[lang].hero;
+        return (
+          <section id="home" className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+            <div className="absolute inset-0 z-0">
+               <img src="https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover opacity-20 grayscale" />
+               <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background dark:from-[#0b101b] dark:to-[#0b101b]" />
+            </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+              <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+                <span className="inline-block mb-6 px-6 py-1.5 border border-secondary/30 text-secondary bg-secondary/10 font-bold uppercase tracking-[0.5em] text-[8px] rounded-full">{t.badge}</span>
+                <h1 className="text-4xl md:text-7xl font-black tracking-tighter mb-6 uppercase">
+                  {t.title1} <span className="text-gradient-logo">{t.title2}</span> <br/>
+                  <span className="text-foreground/20 dark:text-white/20">{t.title3}</span> <span className="text-secondary">{t.title4}</span> {t.title5}
+                </h1>
+                <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 font-medium leading-relaxed">{t.desc}</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a href="#domains" className="px-8 py-4 bg-gradient-logo text-white rounded-xl font-bold shadow-xl hover:scale-105 transition-all inline-flex items-center gap-2">{t.cta1} <ChevronRight size={18}/></a>
+                  <a href="#contact" className="px-8 py-4 glass-card rounded-xl font-bold hover:bg-white/10 transition-all">{t.cta2}</a>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+        );
+      };
+
+      const About = ({ lang }) => {
+        const t = translations[lang].about;
+        return (
+          <section id="about" className="py-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                <h2 className="text-3xl md:text-5xl font-black mb-8 tracking-tighter uppercase">{t.badge}</h2>
+                <p className="text-gray-500 mb-6 font-medium leading-relaxed">{t.p1}</p>
+                <p className="text-gray-500 mb-10 font-medium leading-relaxed">{t.p2}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-6 glass-card rounded-2xl">
+                    <MapPin className="text-secondary mb-4" />
+                    <h4 className="text-[8px] font-black uppercase tracking-widest mb-1">{t.hq}</h4>
+                    <p className="font-bold text-sm">Bukavu, RD Congo</p>
+                  </div>
+                  <div className="p-6 glass-card rounded-2xl">
+                    <Calendar className="text-secondary mb-4" />
+                    <h4 className="text-[8px] font-black uppercase tracking-widest mb-1">{t.founded}</h4>
+                    <p className="font-bold text-sm">Février 2019</p>
+                  </div>
+                </div>
+              </motion.div>
+              <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover" />
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const Domains = ({ lang }) => {
+        const t = translations[lang].domains;
+        const icons = [Shield, HandHeart, Briefcase, MessageSquare, Sprout, Leaf, GraduationCap, Stethoscope, Pickaxe];
+        return (
+          <section id="domains" className="py-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase">{t.title}</h2>
+                <p className="text-muted-foreground mt-4">{t.subtitle}</p>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {t.items.map((item, i) => {
+                  const Icon = icons[i];
+                  return (
+                    <motion.div key={i} whileHover={{ y: -10 }} className="p-8 glass-card rounded-3xl group h-full flex flex-col">
+                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-all">
+                        <Icon className="text-primary group-hover:text-white transition-colors" />
+                      </div>
+                      <h4 className="font-black text-xl mb-3 uppercase tracking-tight">{item.t}</h4>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{item.d}</p>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const News = ({ lang }) => {
+        const t = translations[lang].news;
+        return (
+          <section id="news" className="py-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase text-center mb-16">{t.title}</h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                {t.items.map((item, i) => (
+                  <div key={i} className="glass-card rounded-[2rem] overflow-hidden group">
+                    <div className="h-48 overflow-hidden">
+                      <img src={item.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    </div>
+                    <div className="p-8">
+                      <span className="text-[8px] font-black uppercase text-secondary tracking-widest">{item.cat}</span>
+                      <h4 className="text-xl font-black mt-2 mb-4 uppercase">{item.t}</h4>
+                      <p className="text-muted-foreground text-sm mb-6">{item.d}</p>
+                      <button className="text-[10px] font-black uppercase text-primary inline-flex items-center gap-2">{t.readMore} <ChevronRight size={14}/></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const Footer = ({ lang }) => {
+        const t = translations[lang].footer;
+        return (
+          <footer className="footer-bg pt-24 pb-12 border-t border-white/5" id="contact">
+            <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-16 mb-20">
+              <div>
+                <Logo />
+                <p className="mt-8 text-muted-foreground leading-relaxed">{t.desc}</p>
+              </div>
+              <div>
+                <h4 className="font-black text-[10px] uppercase tracking-widest mb-8 text-secondary">{t.nav}</h4>
+                <div className="grid grid-cols-1 gap-4 font-bold text-muted-foreground">
+                   {['home', 'about', 'mission', 'domains', 'news'].map(k => (
+                    <a key={k} href={`#${k}`} className="hover:text-white transition-colors">{translations[lang].nav[k]}</a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-black text-[10px] uppercase tracking-widest mb-8 text-secondary">{t.contact}</h4>
+                <div className="space-y-6 text-muted-foreground font-bold text-sm">
+                  <div className="flex gap-4">
+                    <MapPin className="text-secondary shrink-0" />
+                    <span>Commune d'Ibanda, Avenue Kalehe no 3, Bukavu, Sud-Kivu, RD Congo.</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <Heart className="text-secondary shrink-0" />
+                    <span>apdeseorg@gmail.com</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="text-center pt-12 border-t border-white/5 text-[8px] font-black uppercase tracking-[0.4em] text-muted-foreground/30">
+              © {new Date().getFullYear()} APDESE NGO. {t.rights}
+            </div>
+          </footer>
+        )
+      }
+
+      function App() {
+        const [lang, setLang] = useState('fr');
+        const [theme, setTheme] = useState('dark');
+
+        useEffect(() => {
+          document.documentElement.classList.toggle('dark', theme === 'dark');
+        }, [theme]);
+
+        return (
+          <div className="dark:bg-[#0b101b] transition-colors duration-500">
+            <Navbar lang={lang} setLang={setLang} theme={theme} toggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} />
+            <main>
+              <Hero lang={lang} />
+              <About lang={lang} />
+              <MissionVision lang={lang} />
+              <Domains lang={lang} />
+              <Resources lang={lang} />
+              <News lang={lang} />
+              <Organization lang={lang} />
+              <Partners lang={lang} />
+            </main>
+            <Footer lang={lang} />
+          </div>
+        );
+      }
+
+      const MissionVision = ({ lang }) => {
+        const t = translations[lang].mission;
+        const [activeTab, setActiveTab] = useState('mission');
+        return (
+          <section id="mission" className="py-24 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 text-center mb-16 relative z-10">
+              <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-tighter uppercase">{t.title}</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">{t.subtitle}</p>
+            </div>
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+              <div className="flex justify-center gap-4 mb-12">
+                {['mission', 'vision'].map(tab => (
+                  <button key={tab} onClick={() => setActiveTab(tab)} className={`px-8 py-3 rounded-xl font-black uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-gradient-logo text-white shadow-xl' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>{t.tabs[tab]}</button>
+                ))}
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Object.entries(t.items).filter(([k]) => k.startsWith(activeTab === 'mission' ? 'm' : 'v')).map(([k, item], i) => (
+                  <div key={k} className="p-8 glass-card rounded-2xl group shadow-xl">
+                    <h4 className="font-black text-xl mb-3 text-foreground dark:text-white uppercase tracking-tight">{item.t}</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.d}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      const Resources = ({ lang }) => {
+        const t = translations[lang].resources;
+        const items = [
+          { ...t.human, icon: Users, color: "text-blue-500" },
+          { ...t.material, icon: Building, color: "text-amber-500" },
+          { ...t.financial, icon: Coins, color: "text-emerald-500" }
+        ];
+        return (
+          <section id="resources" className="py-24">
+            <div className="max-w-7xl mx-auto px-4 text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-tighter uppercase">{t.title}</h2>
+              <p className="text-muted-foreground">{t.subtitle}</p>
+            </div>
+            <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+              {items.map((item, i) => (
+                <div key={i} className="p-8 glass-card rounded-3xl group shadow-xl">
+                  <div className={`w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 ${item.color}`}>
+                    <item.icon size={28} />
+                  </div>
+                  <h4 className="font-black text-xl mb-3 uppercase tracking-tight">{item.t}</h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{item.d}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      }
+
+      const Organization = ({ lang }) => {
+        const t = translations[lang].org;
+        return (
+          <section id="org" className="py-24">
+            <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-3xl md:text-5xl font-black mb-8 tracking-tighter uppercase">{t.title}</h2>
+                <p className="text-muted-foreground mb-8">{t.desc}</p>
+                <div className="space-y-4">
+                  {t.items.map((item, i) => (
+                    <div key={i} className="flex items-center gap-4 p-4 glass-card rounded-xl hover:bg-white/10 transition-all">
+                      <CheckCircle2 className="text-secondary" size={20} />
+                      <span className="font-bold text-sm tracking-tight">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-1 bg-gradient-logo rounded-3xl shadow-2xl">
+                <div className="bg-background/80 dark:bg-[#0b101b]/80 p-8 rounded-[1.4rem] backdrop-blur-3xl">
+                   {/* Simple Accordion implementation */}
+                   {Object.entries(t.accordion).filter(([k]) => k.startsWith('t')).map(([k, title], i) => {
+                     const descKey = 'd' + k.slice(1);
+                     return (
+                       <div key={k} className="mb-6 last:mb-0">
+                         <h4 className="font-black text-lg mb-2 uppercase tracking-tight text-secondary">{title}</h4>
+                         <p className="text-muted-foreground text-sm leading-relaxed">{t.accordion[descKey]}</p>
+                       </div>
+                     )
+                   })}
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      const Partners = ({ lang }) => {
+        const t = translations[lang].partners;
+        return (
+          <section className="py-24 bg-white/5 border-y border-white/5">
+            <div className="max-w-7xl mx-auto px-4 text-center">
+              <h2 className="text-2xl font-bold mb-12 tracking-[0.6em] uppercase text-secondary/40">{t.title}</h2>
+              <div className="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all">
+                {[1, 2, 3, 4, 5].map(i => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-10 h-10 glass-card rounded-full flex items-center justify-center">
+                      <Globe size={20} className="text-primary" />
+                    </div>
+                    <span className="font-black text-lg uppercase tracking-tight">Partner {i}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      }
+
       const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(React.createElement(App));
+      root.render(<App />);
     </script>
   </body>
 </html>
-
