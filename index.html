@@ -1,13 +1,109 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <title>APDESE ONG - Appui aux Personnes Démunies et de Sensibilisation sur l'Environnement</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+      :root {
+        --foreground-rgb: 0, 0, 0;
+        --background-start-rgb: 214, 219, 220;
+        --background-end-rgb: 255, 255, 255;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: rgb(var(--foreground-rgb));
+      }
+      /* Styles simplifiés pour GitHub Pages */
+      .bg-primary { background-color: #166534; }
+      .text-primary { color: #166534; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+<script type="module">
+      import React from 'https://esm.sh/react@18.2.0';
+      import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+      import { motion, AnimatePresence } from 'https://esm.sh/framer-motion@10.12.16';
+      import { Heart, Leaf, Users, Mail, MapPin, Phone, ArrowRight, Menu, X, Landmark, Globe, Recycle } from 'https://esm.sh/lucide-react@0.244.0';
+
+      const App = () => {
+        const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+        const [language, setLanguage] = React.useState('fr');
+
+        const translations = {
+          fr: {
+            title: "APDESE ONG",
+            subtitle: "Appui aux Personnes Démunies et de Sensibilisation sur l'Environnement",
+            heroTitle: "Bâtir un avenir solidaire et durable",
+            heroSub: "Nous luttons contre la pauvreté tout en protégeant notre environnement pour les générations futures.",
+            contact: "Contactez-nous",
+            about: "À propos",
+            missions: "Nos Missions",
+            address: "Conakry, Guinée",
+            phone: "+224 621 00 00 00",
+            email: "contact@apdese-ong.org"
+          }
+        };
+
+        const t = translations[language];
+
+        return (
+          <div className="min-h-screen bg-white">
+            <nav className="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-green-100">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between h-20 items-center">
+                  <div className="flex items-center gap-2">
+                    <Leaf className="w-8 h-8 text-green-600" />
+                    <span className="text-2xl font-bold text-green-800">{t.title}</span>
+                  </div>
+                  <div className="hidden md:flex gap-8 font-medium">
+                    <a href="#missions" className="hover:text-green-600 transition-colors">Missions</a>
+                    <a href="#about" className="hover:text-green-600 transition-colors">À propos</a>
+                    <a href="#contact" className="hover:text-green-600 transition-colors">Contact</a>
+                  </div>
+                </div>
+              </div>
+            </nav>
+
+            <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-green-50 via-white to-green-50">
+              <div className="max-w-7xl mx-auto text-center">
+                <motion.h1 initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="text-5xl md:text-7xl font-bold mb-6 text-green-900 tracking-tight">
+                  {t.heroTitle}
+                </motion.h1>
+                <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">{t.heroSub}</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button className="px-8 py-4 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 transition">Faire un don</button>
+                  <button className="px-8 py-4 border-2 border-green-600 text-green-600 rounded-full font-bold hover:bg-green-50 transition">En savoir plus</button>
+                </div>
+              </div>
+            </section>
+<footer className="bg-gray-900 text-white py-20 px-4" id="contact">
+              <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
+                <div>
+                  <h3 className="text-2xl font-bold mb-6">{t.title}</h3>
+                  <p className="text-gray-400">{t.subtitle}</p>
+                </div>
+                <div>
+                  <h4 className="font-bold mb-6">Contact</h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3"><MapPin className="w-5 h-5 text-green-500"/> {t.address}</div>
+                    <div className="flex items-center gap-3"><Phone className="w-5 h-5 text-green-500"/> {t.phone}</div>
+                    <div className="flex items-center gap-3"><Mail className="w-5 h-5 text-green-500"/> {t.email}</div>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </div>
+        );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(React.createElement(App));
+    </script>
   </body>
 </html>
 
